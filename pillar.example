@@ -114,6 +114,8 @@ apache:
       #defaults:
       #  custom_var: "default value"
 
+  # According to https://github.com/saltstack-formulas/apache-formula/pull/32
+  #   This state will not work for modules that need to be installed.
   modules:
     enabled:  # List modules to enable
       - ldap
