@@ -71,6 +71,9 @@ Listen {{ intf }}:{{ vals.port }}
     {%   if site.get('SSLCertificateChainFile') %}
     SSLCertificateChainFile {{ site.SSLCertificateChainFile}}
     {%   endif %}
+    {%   if site.get('SSLCACertificateFile') %}
+    SSLCACertificateFile {{ site.SSLCACertificateFile}}
+    {%   endif %}
     {% endif %}
 
     {% for loc, path in site.get('Alias', {}).items() %}
