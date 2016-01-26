@@ -59,6 +59,9 @@ Listen {{ intf }}:{{ vals.port }}
     {% if site.get('DocumentRoot') != False %}DocumentRoot {{ vals.DocumentRoot }}{% endif %}
     {% if site.get('VirtualDocumentRoot') %}VirtualDocumentRoot {{ vals.VirtualDocumentRoot }}{% endif %}
 
+    {% if site.get('RewriteEngine') %}RewriteEngine {{ vals.RewriteEngine }}{% endif %}
+    {% if site.get('RewriteOptions') %}RewriteOptions {{ vals.RewriteOptions }}{% endif %}
+
     {% if site.get('SSLCertificateFile') %}
     SSLEngine on
     SSLCertificateFile {{ site.SSLCertificateFile }}
