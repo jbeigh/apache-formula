@@ -23,6 +23,9 @@
     'DocumentRoot': site.get('DocumentRoot', '{0}/{1}'.format(map.wwwdir, sitename)),
     'VirtualDocumentRoot': site.get('VirtualDocumentRoot'),
 
+    'RewriteEngine': site.get('RewriteEngine'),
+    'RewriteOptions': site.get('RewriteOptions'),
+
     'Directory_default': '{0}/{1}'.format(map.wwwdir, sitename),
     'Directory': {
         'Options': '-Indexes +FollowSymLinks',
