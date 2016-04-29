@@ -23,10 +23,10 @@ include:
       - module: apache-reload
 
 {% if site.get('DocumentRoot') != False %}
-{% if site.get('group') != False %}
+{% if site.get('group') is defined %}
     - group: {{ site.get('group') }}
 {% endif %}
-{% if site.get('mode') != False %}
+{% if site.get('mode') is defined %}
     - mode: {{ site.get('mode') }}
 {% endif %}
 {{ id }}-documentroot:
