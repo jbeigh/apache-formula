@@ -24,10 +24,10 @@ include:
 
 {% if site.get('DocumentRoot') != False %}
 {% if site.get('group') != False %}
-    - group: {{ site.get('group'} }}
+    - group: {{ site.get('group') }}
 {% endif %}
 {% if site.get('mode') != False %}
-    - mode: {{ site.get('mode'} }}
+    - mode: {{ site.get('mode') }}
 {% endif %}
 {{ id }}-documentroot:
   file.directory:
