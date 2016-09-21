@@ -131,7 +131,7 @@
     </Location>
     {% endfor %}
 
-    {%- for key, val in site.get('SetEnv', {}).items() -%}
+    {%- for key, val in site.get('SetEnv', {}).items() %}
     SetEnv {{key}} {{val}}
     {%- endfor -%}
 
