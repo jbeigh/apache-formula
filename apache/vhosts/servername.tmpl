@@ -131,6 +131,10 @@
     </Location>
     {% endfor %}
 
+    {%- for key, val in site.get('SetEnv', {}).items() %}
+    SetEnv {{key}} {{val}}
+    {%- endfor -%}
+
     {%- if site.get('Formula_Append') %}
     {{ site.Formula_Append|indent(4) }}
     {% endif %}
