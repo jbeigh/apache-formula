@@ -45,7 +45,7 @@
     ServerName {{ vals.ServerName }}
     {% if site.get('ServerAlias') != False %}ServerAlias {{ vals.ServerAlias }}{% endif %}
 
-    {% if site.get('ServerAdmin') != False %}ServerAdmin {{ vals.ServerAdmin }}{% endif -%}
+    {% if site.get('ServerAdmin') != False %}ServerAdmin {{ vals.ServerAdmin }}{% endif %}
 
     {% if site.get('DirectoryIndex') -%}DirectoryIndex {{ vals.DirectoryIndex }}{% endif %}
     {% if site.get('UseCanonicalName') -%}UseCanonicalName {{ vals.UseCanonicalName }}{% endif %}
@@ -117,7 +117,7 @@
     } %}
 
     <Location "{{ path }}">
-        {%- if apache.use_require %}
+        {% if apache.use_require %}
         {%- if lvals.get('Require') != False %}Require {{lvals.Require}}{% endif %}
         {% else %}
         {%- if lvals.get('Order') != False %}Order {{ lvals.Order }}{% endif %}

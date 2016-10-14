@@ -85,6 +85,18 @@ Installs and enables the mod_fcgid module
 
 Installs and enables the mod_dav_svn module (Debian only)
 
+``apache.mod_security``
+----------------------
+
+Installs an enables the `Apache mod_security2 WAF`<http://modsecurity.org/>`_
+using data from Pillar. (Debian and RedHat Only)
+
+Allows you to install the basic Core Rules (CRS) and some basic configuration for mod_security2
+
+``apache.mod_ssl``
+----------------------
+
+Installs and enables the mod_ssl module (Debian and RedHad only)
 
 ``apache.mod_vhost_alias``
 ----------------------
@@ -100,6 +112,11 @@ Enables and configures the Apache module mod_remoteip using data from Pillar. (D
 --------------------------
 
 Replace default vhost with own version. By default, it's 503 code. (Debian Only)
+
+``apache.no_default_vhost``
+--------------------------
+
+Remove the default vhost. (Debian Only)
 
 ``apache.vhosts.standard``
 --------------------------
