@@ -42,7 +42,7 @@ artful:
   default_site_ssl: default-ssl.conf
 
 bionic:
-  wwwdir: /var/www/html
+  wwwdir: /var/www
   confext: .conf
   default_site: 000-default.conf
   default_site_ssl: default-ssl.conf
