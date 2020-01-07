@@ -55,7 +55,7 @@
 		# It is also possible to configure the loglevel for particular
 		# modules, e.g.
 		#Loglevel info ssl:warn
-		{% if site.get('LogLevel') != False -%}LogLevel {{ vals.LogLevel }}{% endif %}
+		{% if site.get('LogLevel') -%}LogLevel {{ vals.LogLevel }}{% endif %}
 
 		{% if site.get('ErrorLog') != False -%}ErrorLog {{ vals.ErrorLog }}{% endif %}
 		{% if site.get('CustomLog') != False -%}CustomLog {{ vals.CustomLog }}{% if vals.LogFormat %} {{ vals.LogFormat }}{% endif %}{% endif %}
