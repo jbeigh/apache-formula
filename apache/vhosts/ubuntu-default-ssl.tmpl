@@ -20,6 +20,7 @@
 
     'ErrorLog': site.get('ErrorLog', '${APACHE_LOG_DIR}/error.log'),
     'LogFormat': site.get('LogFormat', ''),
+    'LogLevel': site.get('LogLevel', 'info ssl:warn'),
     'CustomLog': site.get('CustomLog', '${APACHE_LOG_DIR}/access.log combined'),
 
     'DocumentRoot': site.get('DocumentRoot', '{0}/{1}'.format(map.wwwdir, sitename)),
@@ -44,7 +45,7 @@
 } -%}
 
 <IfModule mod_ssl.c>
-	<VirtualHost {% for intf in vals.interfaces %} {{ intf }}:{{ vals.port }}{% endfor -%}>
+	<VirtualHost {% for intf in vals.interfaces -%} {{ intf }}:{{ vals.port }}{% endfor -%}>
 		{% if site.get('ServerAdmin') != False %}ServerAdmin {{ vals.ServerAdmin }}{% endif %}
 
 		{% if site.get('DocumentRoot') != False -%}DocumentRoot {{ vals.DocumentRoot }}{% endif %}
@@ -53,10 +54,11 @@
 		# error, crit, alert, emerg.
 		# It is also possible to configure the loglevel for particular
 		# modules, e.g.
-		{% if site.get('LogLevel') != False -%}LogLevel {{ site.get('LogLevel', 'info ssl:warn') }}{% else -%}#LogLevel info ssl:warn{% endif %}
+		#Loglevel info ssl:warn
+		{% if site.get('LogLevel') != False -%}LogLevel {{ vals.LogLevel }}{% endif %}
 
 		{% if site.get('ErrorLog') != False -%}ErrorLog {{ vals.ErrorLog }}{% endif %}
-		{% if site.get('CustomLog') != False -%}CustomLog {{ vals.CustomLog }}  {{ vals.LogFormat }}{% endif %}
+		{% if site.get('CustomLog') != False -%}CustomLog {{ vals.CustomLog }}{% if vals.LogFormat %} {{ vals.LogFormat }}{% endif %}{% endif %}
 
 		# For most configuration files from conf-available/, which are
 		# enabled or disabled at a global level, it is possible to
