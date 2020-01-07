@@ -17,6 +17,10 @@ a2enmod pagespeed:
     - require:
       - pkg: libapache2-mod-pagespeed
     - watch_in:
+      - module: apache-restart
+    - require_in:
+      - module: apache-restart
+      - module: apache-reload
       - service: apache
 
 {% for dir in ['/var/cache/mod_pagespeed', '/var/log/pagespeed'] %}
@@ -24,12 +28,12 @@ a2enmod pagespeed:
   file:
     - directory
     - makedirs: true
-    - user: {{ salt['pillar.get']('apache:user', 'www-data') }}
-    - group: {{ salt['pillar.get']('apache:group', 'www-data') }}
+    - user: {{ apache.user }}
+    - group: {{ apache.group }}
     - require:
       - pkg: libapache2-mod-pagespeed
-      - user: {{ salt['pillar.get']('apache:user', 'www-data') }}
-      - group: {{ salt['pillar.get']('apache:group', 'www-data') }}
+      - user: {{ apache.user }}
+      - group: {{ apache.group }}
 {% endfor %}
 
 # Here we hardcode a logrotate entry to take care of the logs

@@ -3,6 +3,18 @@
 include:
   - apache
 
+{{ apache.logdir }}:
+  file.directory:
+    - makedirs: True
+    - require:
+      - pkg: apache
+    - watch_in:
+      - module: apache-restart
+    - require_in:
+      - module: apache-restart
+      - module: apache-reload
+      - service: apache
+
 {{ apache.configfile }}:
   file.managed:
     - template: jinja
@@ -11,15 +23,24 @@ include:
     - require:
       - pkg: apache
     - watch_in:
+      - module: apache-restart
+    - require_in:
+      - module: apache-restart
+      - module: apache-reload
       - service: apache
     - context:
-      apache: {{ apache }}
+      apache: {{ apache | json }}
 
 {{ apache.vhostdir }}:
   file.directory:
+    - makedirs: True
     - require:
       - pkg: apache
     - watch_in:
+      - module: apache-restart
+    - require_in:
+      - module: apache-restart
+      - module: apache-reload
       - service: apache
 
 {% if grains['os_family']=="Debian" %}
@@ -31,6 +52,10 @@ include:
     - require:
       - pkg: apache
     - watch_in:
+      - module: apache-restart
+    - require_in:
+      - module: apache-restart
+      - module: apache-reload
       - service: apache
 
 {{ apache.portsfile }}:
@@ -41,23 +66,31 @@ include:
     - require:
       - pkg: apache
     - watch_in:
+      - module: apache-restart
+    - require_in:
+      - module: apache-restart
+      - module: apache-reload
       - service: apache
     - context:
-      apache: {{ apache }}
+      apache: {{ apache | json }}
 
 {% endif %}
 
 {% if grains['os_family']=="RedHat" %}
-/etc/httpd/conf.d/welcome.conf:
+{{ apache.confdir }}/welcome.conf:
   file.absent:
     - require:
       - pkg: apache
     - watch_in:
+      - module: apache-restart
+    - require_in:
+      - module: apache-restart
+      - module: apache-reload
       - service: apache
 {% endif %}
 
-{% if grains['os_family']=="Suse" %}
-/etc/apache2/sysconfig.d/global.conf:
+{% if grains['os_family']=="Suse" or salt['grains.get']('os') == 'SUSE' %}
+/etc/apache2/global.conf:
   file.managed:
     - template: jinja
     - source:
@@ -65,7 +98,43 @@ include:
     - require:
       - pkg: apache
     - watch_in:
+      - module: apache-restart
+    - require_in:
+      - module: apache-restart
+      - module: apache-reload
       - service: apache
     - context:
-      apache: {{ apache }}
+      apache: {{ apache | json }}
+{% endif %}
+
+{% if grains['os_family']=="FreeBSD" %}
+/usr/local/etc/{{ apache.service }}/envvars.d/by_salt.env:
+  file.managed:
+    - template: jinja
+    - source:
+      - salt://apache/files/{{ salt['grains.get']('os_family') }}/envvars-{{ apache.version }}.jinja
+    - require:
+      - pkg: apache
+    - watch_in:
+      - module: apache-restart
+    - require_in:
+      - module: apache-restart
+      - module: apache-reload
+      - service: apache
+
+{{ apache.portsfile }}:
+  file.managed:
+    - template: jinja
+    - source:
+      - salt://apache/files/{{ salt['grains.get']('os_family') }}/ports-{{ apache.version }}.conf.jinja
+    - require:
+      - pkg: apache
+    - watch_in:
+      - module: apache-restart
+    - require_in:
+      - module: apache-restart
+      - module: apache-reload
+      - service: apache
+    - context:
+      apache: {{ apache | json }}
 {% endif %}

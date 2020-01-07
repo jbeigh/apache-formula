@@ -11,13 +11,18 @@ mod-fcgid:
       - pkg: apache
 
 {% if grains['os_family']=="Debian" %}
-a2enmod fcgid:
+a2enmod fcgid for apache.mod_fcgid:
   cmd.run:
+    - name: a2enmod fcgid
     - order: 225
     - unless: ls /etc/apache2/mods-enabled/fcgid.load
     - require:
       - pkg: mod-fcgid
     - watch_in:
       - module: apache-restart
+    - require_in:
+      - module: apache-restart
+      - module: apache-reload
+      - service: apache
 
 {% endif %}
