@@ -45,18 +45,18 @@
 } -%}
 
 	<VirtualHost {% for intf in vals.interfaces %} {{ intf }}:{{ vals.port }}{% endfor -%}>
-    {% if site.get('ServerAdmin') != False %}ServerAdmin {{ vals.ServerAdmin }}{% endif %}
+		{% if site.get('ServerAdmin') != False %}ServerAdmin {{ vals.ServerAdmin }}{% endif %}
 
-    {% if site.get('DocumentRoot') != False -%}DocumentRoot {{ vals.DocumentRoot }}{% endif %}
+		{% if site.get('DocumentRoot') != False -%}DocumentRoot {{ vals.DocumentRoot }}{% endif %}
 
 		# Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
 		# error, crit, alert, emerg.
 		# It is also possible to configure the loglevel for particular
 		# modules, e.g.
-    {% if site.get('LogLevel') != False -%}LogLevel {{ vals.LogLevel }}{% else %}#LogLevel info ssl:warn{% endif %}
+		{% if site.get('LogLevel') != False -%}LogLevel {{ vals.LogLevel }}{% else %}#LogLevel info ssl:warn{% endif %}
 
-    {% if site.get('ErrorLog') != False -%}ErrorLog {{ vals.ErrorLog }}{% endif %}
-    {% if site.get('CustomLog') != False -%}CustomLog {{ vals.CustomLog }}  {{ vals.LogFormat }}{% endif %}
+		{% if site.get('ErrorLog') != False -%}ErrorLog {{ vals.ErrorLog }}{% endif %}
+		{% if site.get('CustomLog') != False -%}CustomLog {{ vals.CustomLog }}  {{ vals.LogFormat }}{% endif %}
 
 		# For most configuration files from conf-available/, which are
 		# enabled or disabled at a global level, it is possible to
@@ -67,15 +67,15 @@
 
 		#   SSL Engine Switch:
 		#   Enable/Disable SSL for this virtual host.
-    {% if site.get('SSLCertificateFile') %}SSLEngine on
+		SSLEngine on
 		
 		#   A self-signed (snakeoil) certificate can be created by installing
 		#   the ssl-cert package. See
 		#   /usr/share/doc/apache2/README.Debian.gz for more info.
 		#   If both key and certificate are stored in the same file, only the
 		#   SSLCertificateFile directive is needed.
-    SSLCertificateFile {{ site.SSLCertificateFile }}
-    SSLCertificateKeyFile {% if site.get('SSLCertificateKeyFile') %}{{ site.SSLCertificateKeyFile }}{% else %}/etc/ssl/private/ssl-cert-snakeoil.key{% endif %}
+		SSLCertificateFile {{ site.SSLCertificateFile }}
+		SSLCertificateKeyFile {% if site.get('SSLCertificateKeyFile') %}{{ site.SSLCertificateKeyFile }}{% else %}/etc/ssl/private/ssl-cert-snakeoil.key{% endif %}
 
 		#   Server Certificate Chain:
 		#   Point SSLCertificateChainFile at a file containing the
@@ -84,7 +84,7 @@
 		#   the referenced file can be the same as SSLCertificateFile
 		#   when the CA certificates are directly appended to the server
 		#   certificate for convinience.
-    {% if site.get('SSLCertificateChainFile') %}SSLCertificateChainFile {{ site.SSLCertificateChainFile }}{% else %}#SSLCertificateChainFile /etc/apache2/ssl.crt/server-ca.crt{% endif %}
+		{% if site.get('SSLCertificateChainFile') %}SSLCertificateChainFile {{ site.SSLCertificateChainFile }}{% else %}#SSLCertificateChainFile /etc/apache2/ssl.crt/server-ca.crt{% endif %}
 
 		#   Certificate Authority (CA):
 		#   Set the CA certificate verification path where to find CA
