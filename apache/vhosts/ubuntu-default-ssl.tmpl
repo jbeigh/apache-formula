@@ -6,8 +6,8 @@
 {%- set sitename = site.get('ServerName', id) -%}
 
 {%- set vals = {
-    'interfaces': site.get('interface', '*').split(),
-    'port': site.get('port', '80'),
+    'interfaces': site.get('interface', '_default_').split(),
+    'port': site.get('port', '443'),
 
     'ServerName': sitename,
     'ServerAlias': site.get('ServerAlias', ''),
@@ -19,7 +19,7 @@
     'AllowEncodedSlashes': site.get('AllowEncodedSlashes', 'Off'),
 
     'ErrorLog': site.get('ErrorLog', '${APACHE_LOG_DIR}/error.log'),
-    'LogFormat': site.get('LogFormat', '"%h %l %u %t \\\"%r\\\" %>s"'),
+    'LogFormat': site.get('LogFormat', ''),
     'CustomLog': site.get('CustomLog', '${APACHE_LOG_DIR}/access.log combined'),
 
     'DocumentRoot': site.get('DocumentRoot', '{0}/{1}'.format(map.wwwdir, sitename)),
@@ -53,7 +53,7 @@
 		# error, crit, alert, emerg.
 		# It is also possible to configure the loglevel for particular
 		# modules, e.g.
-		{% if site.get('LogLevel') != False -%}LogLevel {{ site.get('LogLevel', 'info ssl:warn') }}{% else %}#LogLevel info ssl:warn{% endif %}
+		{% if site.get('LogLevel') != False -%}LogLevel {{ site.get('LogLevel', 'info ssl:warn') }}{% else -%}#LogLevel info ssl:warn{% endif %}
 
 		{% if site.get('ErrorLog') != False -%}ErrorLog {{ vals.ErrorLog }}{% endif %}
 		{% if site.get('CustomLog') != False -%}CustomLog {{ vals.CustomLog }}  {{ vals.LogFormat }}{% endif %}
