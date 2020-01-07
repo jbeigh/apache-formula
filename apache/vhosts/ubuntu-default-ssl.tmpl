@@ -3,6 +3,7 @@
 #
 {# Define default values here so the template below can just focus on layout #}
 <IfModule mod_ssl.c>
+
 {%- set sitename = site.get('ServerName', id) -%}
 
 {%- set vals = {
@@ -12,16 +13,15 @@
     'ServerName': sitename,
     'ServerAlias': site.get('ServerAlias', ''),
 
-    'ServerAdmin': site.get('ServerAdmin', 'webmaster@{0}'.format(sitename)),
+    'ServerAdmin': site.get('ServerAdmin', 'webmaster@localahost),
 
     'DirectoryIndex': site.get('DirectoryIndex'),
     'UseCanonicalName': site.get('UseCanonicalName'),
     'AllowEncodedSlashes': site.get('AllowEncodedSlashes', 'Off'),
 
-    'LogLevel': site.get('LogLevel', 'warn'),
-    'ErrorLog': site.get('ErrorLog', '{0}/{1}-error.log'.format(map.logdir, sitename)),
+    'ErrorLog': site.get('ErrorLog', '${APACHE_LOG_DIR}/error.log'),
     'LogFormat': site.get('LogFormat', '"%h %l %u %t \\\"%r\\\" %>s"'),
-    'CustomLog': site.get('CustomLog', '{0}/{1}-access.log'.format(map.logdir, sitename)),
+    'CustomLog': site.get('CustomLog', '${APACHE_LOG_DIR}/access.log combined'),
 
     'DocumentRoot': site.get('DocumentRoot', '{0}/{1}'.format(map.wwwdir, sitename)),
     'VirtualDocumentRoot': site.get('VirtualDocumentRoot'),
@@ -68,7 +68,7 @@
 		#   SSL Engine Switch:
 		#   Enable/Disable SSL for this virtual host.
 		SSLEngine on
-		
+
 		#   A self-signed (snakeoil) certificate can be created by installing
 		#   the ssl-cert package. See
 		#   /usr/share/doc/apache2/README.Debian.gz for more info.
