@@ -20,10 +20,10 @@
 
     'ErrorLog': site.get('ErrorLog', '${APACHE_LOG_DIR}/error.log'),
     'LogFormat': site.get('LogFormat', ''),
-    'LogLevel': site.get('LogLevel', 'info ssl:warn'),
+    'LogLevel': site.get('LogLevel'),
     'CustomLog': site.get('CustomLog', '${APACHE_LOG_DIR}/access.log combined'),
 
-    'DocumentRoot': site.get('DocumentRoot', '{0}/{1}'.format(map.wwwdir, sitename)),
+    'DocumentRoot': site.get('DocumentRoot', '{0}/html'.format(map.wwwdir)),
     'VirtualDocumentRoot': site.get('VirtualDocumentRoot'),
 
     'Timeout': site.get('Timeout'),
